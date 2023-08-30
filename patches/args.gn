@@ -1,0 +1,179 @@
+is_debug = false
+is_component_ffmpeg = true
+target_cpu = "x64"
+symbol_level = 0
+is_component_build = false
+nwjs_sdk = false
+proprietary_codecs = false
+ffmpeg_branding = "Chromium"
+enable_resource_allowlist_generation = false
+rtc_build_examples = false
+enable_iterator_debugging = false
+enable_vr = false
+
+# Disable angle
+angle_enable_d3d9 = false
+angle_enable_d3d11 = false
+#angle_enable_gl = false
+angle_enable_metal = false
+angle_enable_null = false
+angle_enable_vulkan = false
+angle_enable_essl = false
+#angle_enable_glsl = false
+
+## Disable angle
+#use_static_angle = true
+##use_libpci = false
+angle_use_vulkan_null_display = true
+#angle_enable_vulkan = false
+#angle_shared_libvulkan = false
+#angle_enable_d3d9 = false
+#angle_enable_d3d11 = false
+#angle_enable_gl = false
+#angle_enable_metal = false
+#angle_enable_null = false
+##angle_enable_vulkan = false
+#angle_enable_essl = false
+##angle_enable_glsl = false
+##build_angle_perftests = false
+#angle_build_vulkan_system_info = false
+#angle_shared_libvulkan = false
+
+use_dawn = false
+build_dawn_tests = false
+
+build_with_on_device_clustering_backend = false
+
+#enable_base_tracing = false
+enable_location_source = false
+#enable_chrome_notifications = false
+enable_feed_v2 = false
+enable_libaom = false
+enable_library_cdms = false
+
+#todo: fix it:
+#enable_media_remoting = false
+mojo_media_host = ""
+mojo_media_services = []
+enable_openscreen = false
+
+enable_media_remoting_rpc = false
+enable_openscreen = false
+enable_mojom_message_id_scrambling = false
+enable_mojom_typemapping = false
+enable_nocompile_tests = false
+enable_paint_preview = false
+
+# Don't use it:
+#enable_plugins = false
+#enable_pdf = false
+#enable_print_preview = false
+
+enable_side_search = false
+enable_tagged_pdf = false
+enable_webui_tab_strip = false
+exclude_unwind_tables = false
+from_here_uses_location_builtins = false
+gtest_enable_absl_printers = false
+headless_use_policy = false
+headless_use_prefs = false
+
+#enable_widevine = false
+#ignore_missing_widevine_signing_cert = false
+#is_p2p_enabled = false
+
+pdf_enable_xfa = false
+rtc_build_tools = false
+rtc_build_dcsctp = false
+rtc_build_libevent = false
+rtc_build_tools = false
+rtc_build_usrsctp = false
+rtc_enable_avx2 = false
+rtc_enable_grpc = false
+rtc_enable_libevent = false
+rtc_enable_protobuf = false
+rtc_enable_sctp = false
+rtc_exclude_field_trial_default = true
+rtc_exclude_system_time = false
+rtc_include_builtin_audio_codecs = false
+rtc_include_builtin_video_codecs = false
+rtc_include_dav1d_in_internal_decoder_factory = false
+rtc_include_opus = false
+rtc_ios_macos_use_opengl_rendering = false
+rtc_opus_support_120ms_ptime = false
+rtc_use_pipewire = false
+rtc_use_x11 = false
+rtc_use_x11_extensions = false
+rtc_build_json = false
+rtc_enable_external_auth = false
+rtc_libvpx_build_vp9 = false
+
+#erors:
+#rtc_build_libsrtp = false
+#rtc_build_libvpx = false
+#rtc_build_opus = false
+#rtc_exclude_metrics_default = false
+#skia_use_gl = false
+
+tests_have_location_tags = false
+
+#Go!
+#thin_lto_enable_optimizations = true
+optimize_for_fuzzing = true
+#build_with_internal_optimization_guide = true
+
+
+use_base_test_suite = false
+#use_dbus = false
+#use_egl = false
+use_kerberos = false
+use_mpris = false
+use_udev = false
+
+#don't use it
+#use_v8_context_snapshot = false
+
+use_viz_debugger = false
+v8_allocation_site_tracking = false
+v8_deprecation_warnings = false
+
+use_webaudio_pffft = false
+enable_click_to_call = false
+
+v8_enable_snapshot_native_code_counters = false
+v8_enable_javascript_promise_hooks = true
+enable_cdm_host_verification = false
+angle_enable_vulkan_validation_layers = false
+dawn_enable_vulkan_validation_layers = false
+enable_pseudolocales = false
+enable_cet_shadow_stack = false
+is_cfi = false
+use_perfetto_client_library = false
+v8_builtins_profiling_log_file = ""
+enable_dsyms = false
+blink_symbol_level=0
+v8_symbol_level=0
+build_with_tflite_lib=false
+chrome_pgo_phase=0
+clang_use_chrome_plugins=false
+disable_fieldtrial_testing_config=true
+enable_hangout_services_extension=false
+enable_js_type_check=false
+enable_mdns=false
+enable_mse_mpeg2ts_stream_parser=true
+enable_nacl=false
+enable_one_click_signin=false
+enable_reading_list=false
+enable_remoting=false
+enable_reporting=false
+enable_service_discovery=false
+enable_widevine=true
+exclude_unwind_tables=true
+google_api_key=""
+google_default_client_id=""
+google_default_client_secret=""
+safe_browsing_mode=0
+treat_warnings_as_errors=false
+use_official_google_api_keys=false
+use_unofficial_version_number=false
+devtools_skip_typecheck=false
