@@ -1,0 +1,25 @@
+--- a/chrome/browser/external_protocol/external_protocol_handler.cc
++++ b/chrome/browser/external_protocol/external_protocol_handler.cc
+@@ -215,15 +215,15 @@
+   // On ChromeOS, Click to Call is integrated into the external protocol dialog.
+ #if !BUILDFLAG(IS_ANDROID) && !BUILDFLAG(IS_FUCHSIA) && \
+     !BUILDFLAG(IS_CHROMEOS_ASH)
+-  if (web_contents && ShouldOfferClickToCallForURL(
+-                          web_contents->GetBrowserContext(), escaped_url)) {
++  //if (web_contents && ShouldOfferClickToCallForURL(
++  //                        web_contents->GetBrowserContext(), escaped_url)) {
+     // Handle tel links by opening the Click to Call dialog. This will call back
+     // into LaunchUrlWithoutSecurityCheck if the user selects a system handler.
+-    ClickToCallUiController::ShowDialog(web_contents, initiating_origin,
+-                                        std::move(initiator_document),
+-                                        escaped_url, chrome_is_default_handler);
+-    return;
+-  }
++  //  ClickToCallUiController::ShowDialog(web_contents, initiating_origin,
++  //                                      std::move(initiator_document),
++  //                                      escaped_url, chrome_is_default_handler);
++  //  return;
++  //}
+ #endif
+ 
+   if (chrome_is_default_handler) {
