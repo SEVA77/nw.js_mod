@@ -1,0 +1,21 @@
+--- a/chrome/browser/ssl/chrome_security_blocking_page_factory_o.cc
++++ b/chrome/browser/ssl/chrome_security_blocking_page_factory.cc
+@@ -103,12 +103,12 @@
+   // OpenLoginTabForWebContents() is not available on Android (the only
+   // platform on which captive portal detection is not enabled). Simply open
+   // the platform's portal detection URL in a new tab.
+-  const std::string url = security_interstitials::GetCaptivePortalServerUrl(
+-      base::android::AttachCurrentThread());
+-  content::OpenURLParams params(GURL(url), content::Referrer(),
+-                                WindowOpenDisposition::NEW_FOREGROUND_TAB,
+-                                ui::PAGE_TRANSITION_LINK, false);
+-  web_contents->OpenURL(params);
++  //const std::string url = security_interstitials::GetCaptivePortalServerUrl(
++  //    base::android::AttachCurrentThread());
++  //content::OpenURLParams params(GURL(url), content::Referrer(),
++  //                              WindowOpenDisposition::NEW_FOREGROUND_TAB,
++  //                              ui::PAGE_TRANSITION_LINK, false);
++  //web_contents->OpenURL(params);
+ #else
+   ChromeSecurityBlockingPageFactory::OpenLoginTabForWebContents(web_contents,
+                                                                 true);
