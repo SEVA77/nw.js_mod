@@ -1,0 +1,11 @@
+--- a/content/browser/renderer_host/render_process_host_impl.cc
++++ b/content/browser/renderer_host/render_process_host_impl.cc
+@@ -2432,7 +2432,7 @@
+   }
+ #endif
+ 
+-#if BUILDFLAG(ENABLE_LIBRARY_CDMS) || BUILDFLAG(IS_WIN)
++#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+   AddUIThreadInterface(
+       registry.get(), base::BindRepeating(&KeySystemSupportImpl::BindReceiver));
+ #endif
