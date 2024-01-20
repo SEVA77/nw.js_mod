@@ -1,32 +1,74 @@
 --- a/build/config/compiler/BUILD.gn
 +++ b/build/config/compiler/BUILD.gn
-@@ -253,13 +253,13 @@
- # where stuff should go. Put warning related stuff in the "warnings" config.
- 
- config("compiler") {
--  asmflags = []
--  cflags = []
--  cflags_c = []
--  cflags_cc = []
--  cflags_objc = []
--  cflags_objcc = []
--  ldflags = []
-+  asmflags = [ "-Oz" ]
-+  cflags = [ "-Oz", "-fno-math-errno", "-fno-unroll-loops" ]
-+  cflags_c = [ "-Oz" ]
-+  cflags_cc = [ "-Oz" ]
-+  cflags_objc = [ "-Oz" ]
-+  cflags_objcc = [ "-Oz" ]
-+  ldflags = ["-Wl,-s"]
+@@ -261,7 +261,7 @@
+   cflags_objcc = []
+   ldflags = []
    defines = []
-   configs = []
+-  configs = []
++  configs = [ ":optimize" ]
  
-@@ -444,7 +444,7 @@
+   # System-specific flags. If your compiler flags apply to one of the
+   # categories here, add it to the associated file to keep this shared config
+@@ -444,7 +444,8 @@
  
      ldflags += [
        "-Wl,-z,noexecstack",
 -      "-Wl,-z,relro",
 +      "-Wl,-z,norelro",
++      "-Wl,-s",
      ]
  
      if (!is_component_build) {
+@@ -1978,12 +1979,12 @@
+     common_optimize_on_ldflags += [ "/OPT:ICF" ]  # Redundant COMDAT folding.
+   }
+ 
+-  if (is_official_build) {
++  if (!is_official_build) {
+     common_optimize_on_ldflags += [ "/OPT:REF" ]  # Remove unreferenced data.
+     # TODO(thakis): Add LTO/PGO clang flags eventually, https://crbug.com/598772
+   }
+ } else {
+-  common_optimize_on_cflags = []
++  common_optimize_on_cflags = [ "-fno-math-errno", "-fno-unroll-loops" ]
+   common_optimize_on_ldflags = []
+ 
+   if (is_android) {
+@@ -2000,7 +2001,7 @@
+   if (is_apple) {
+     common_optimize_on_ldflags += [ "-Wl,-dead_strip" ]
+ 
+-    if (is_official_build) {
++    if (!is_official_build) {
+       common_optimize_on_ldflags += [
+         "-Wl,-no_data_in_code_info",
+         "-Wl,-no_function_starts",
+@@ -2065,6 +2066,8 @@
+       # Favor size over speed, /O1 must be before the common flags.
+       # /O1 implies /Os and /GF.
+       cflags = [ "/O1" ] + common_optimize_on_cflags + [ "/Oi" ]
++      cflags_c = [ "/O1" ]
++      cflags_cc = [ "/O1" ]
+     } else {
+       # PGO requires all translation units to be compiled with /O2. The actual
+       # optimization level will be decided based on the profiling data.
+@@ -2074,6 +2077,8 @@
+     # Favor size over speed.
+     if (is_clang) {
+       cflags = [ "-Oz" ] + common_optimize_on_cflags
++      cflags_c = [ "-Oz" ]
++      cflags_cc = [ "-Oz" ]
+     } else {
+       cflags = [ "-Os" ] + common_optimize_on_cflags
+     }
+--- a/build/config/compiler/compiler.gni
++++ b/build/config/compiler/compiler.gni
+@@ -124,7 +124,7 @@
+ # Linux & Mac favor speed over size.
+ # TODO(brettw) it's weird that Mac and desktop Linux are different. We should
+ # explore favoring size over speed in this case as well.
+-optimize_for_size = is_android || is_chromecast || is_fuchsia || is_ios
++optimize_for_size = true
+ 
+ declare_args() {
+   # Whether we should consider the profile we're using to be accurate. Accurate
