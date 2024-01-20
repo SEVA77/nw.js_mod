@@ -23,3 +23,33 @@
  #endif
  
    if (chrome_is_default_handler) {
+
+--- a/chrome/browser/renderer_context_menu/render_view_context_menu.cc
++++ b/chrome/browser/renderer_context_menu/render_view_context_menu.cc
+@@ -1413,7 +1413,7 @@
+     if (params_.has_image_contents)
+       AppendQRCodeGeneratorItem(/*for_image=*/true, /*draw_icon=*/true);
+ 
+-#if !BUILDFLAG(IS_FUCHSIA)
++#if (0)
+     AppendClickToCallItem();
+ #endif
+ 
+@@ -2041,7 +2041,7 @@
+   int items_before_sharing = menu_model_.GetItemCount();
+   bool starting_separator_added = items_before_sharing > items_initial;
+ 
+-#if !BUILDFLAG(IS_FUCHSIA)
++#if (0)
+   AppendClickToCallItem();
+ #endif
+   AppendSharedClipboardItem();
+@@ -2055,7 +2055,7 @@
+     menu_model_.RemoveItemAt(items_initial);
+ }
+ 
+-#if !BUILDFLAG(IS_FUCHSIA)
++#if (0)
+ void RenderViewContextMenu::AppendClickToCallItem() {
+   SharingClickToCallEntryPoint entry_point;
+   absl::optional<std::string> phone_number;
