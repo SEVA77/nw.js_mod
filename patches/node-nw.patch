@@ -1,0 +1,31 @@
+--- a/third_party/node-nw/common.gypi
++++ b/third_party/node-nw/common.gypi
+@@ -44,7 +44,7 @@
+     'llvm_version': '6.0',
+ 
+     # Don't use ICU data file (icudtl.dat) from V8, we use our own.
+-    'icu_use_data_file_flag%': 0,
++    'icu_use_data_file_flag%': 1,
+ 
+     # Reset this number to 0 on major V8 upgrades.
+     # Increment by one for each non-official patch applied to deps/v8.
+@@ -338,7 +338,7 @@
+             }],
+           ],
+         },
+-        'cflags': [ '-O3' ],
++        'cflags': [ '-Oz' ],
+         'conditions': [
+           ['enable_lto=="true"', {
+             'cflags': ['<(lto)'],
+--- a/third_party/node-nw/node.gyp
++++ b/third_party/node-nw/node.gyp
+@@ -33,7 +33,7 @@
+     'node_shared_cares%': 'false',
+     'node_shared_libuv%': 'false',
+     'node_shared_nghttp2%': 'false',
+-    'node_use_openssl': 'true',
++    'node_use_openssl': 'false',
+     'node_shared_openssl': 'false',
+     'openssl_fips': '',
+     'openssl_is_fips': 'false',
