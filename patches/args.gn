@@ -1,3 +1,4 @@
+
 enable_resource_allowlist_generation = false
 rtc_build_examples = false
 enable_iterator_debugging = false
@@ -83,6 +84,8 @@ enable_click_to_call = false
 v8_enable_snapshot_native_code_counters = false
 v8_enable_javascript_promise_hooks = true
 enable_cdm_host_verification = false
+chrome_root_store_supported=false
+rtc_enable_win_wgc = false
 
 #Ungoogled chromium flags
 angle_enable_vulkan_validation_layers = false
