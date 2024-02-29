@@ -1,11 +1,20 @@
 --- a/content/nw/src/nw_version.h
 +++ b/content/nw/src/nw_version.h
-@@ -23,7 +23,7 @@
- 
- #define NW_MAJOR_VERSION 0
+@@ -25,7 +25,7 @@
  #define NW_MINOR_VERSION 64
--#define NW_PATCH_VERSION 1
-+#define NW_PATCH_VERSION 1-mod1
+ #define NW_PATCH_VERSION 1
  
- #define NW_VERSION_IS_RELEASE 1
+-#define NW_VERSION_IS_RELEASE 1
++#define NW_VERSION_IS_RELEASE 0
  
+ #ifndef NW_STRINGIFY
+ #define NW_STRINGIFY(n) NW_STRINGIFY_HELPER(n)
+@@ -39,7 +39,7 @@
+ #else
+ # define NW_VERSION_STRING  NW_STRINGIFY(NW_MAJOR_VERSION) "." \
+                               NW_STRINGIFY(NW_MINOR_VERSION) "." \
+-                              NW_STRINGIFY(NW_PATCH_VERSION) "-beta1"
++                              NW_STRINGIFY(NW_PATCH_VERSION) "-mod1"
+ #endif
+ 
+ #define NW_VERSION "v" NW_VERSION_STRING
