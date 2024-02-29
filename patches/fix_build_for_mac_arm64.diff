@@ -1,0 +1,11 @@
+--- a/chrome/BUILD.gn
++++ b/chrome/BUILD.gn
+@@ -1339,7 +1339,7 @@
+                            "//third_party/breakpad:dump_syms($host_toolchain)",
+                            "root_out_dir") + "/dump_syms",
+                    root_out_dir),
+-               "-a", "x86_64",
++               "-a", "arm64",
+                "-g",
+                rebase_path(
+                    "$root_out_dir/{{source_file_part}}.dSYM/Contents/Resources/DWARF/{{source_file_part}}",
