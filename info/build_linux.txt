@@ -1,0 +1,116 @@
+export PATH="$PATH:${HOME}/depot_tools"
+
+Python 2 and Python <=10 are needed:
+export PATH=${HOME}/.pyenv/versions/2.7.18/bin/:${HOME}/.pyenv/versions/3.10.13/bin/:$PATH
+
+cd nwjs/
+
+gclient config --name=src https://github.com/SEVA77/chromium.src.git@origin/nw70
+
+git clone https://github.com/SEVA77/nw.js.git ./src/content/nw
+
+git clone https://github.com/SEVA77/v8.git ./src/v8
+
+git clone https://github.com/SEVA77/node.git ./src/third_party/node-nw
+
+gclient sync --with_branch_heads --nohooks
+
+gclient runhooks
+
+cd src/
+
+##python build/linux/sysroot_scripts/install-sysroot.py --all
+
+
+APPLY PATCHES AND UTILS:
+
+./patches/ungoogled-chromium/utils/prune_binaries.py ./ patches/ungoogled-chromium/utils/pruning.list
+
+cat `cat ./patches/ungoogled-chromium_series` | patch -p1
+
+./patches/ungoogled-chromium/utils/domain_substitution.py apply -r ./patches/ungoogled-chromium/utils/domain_regex.list -f ./patches/ungoogled-chromium/utils/domain_substitution.list -c ./patches/ungoogled-chromium/domsubcache.tar.gz ./
+
+cat ./patches/*.patch | patch -p1
+
+cat ./patches/clear_locales/*.patch | patch -p1
+
+cat ./patches/cromite/*.patch | patch -p1
+
+
+---------------------------------------------------------------------------
+LINUX X64
+---------------------------------------------------------------------------
+
+GN GEN:
+
+export GYP_DEFINES='target_arch=x64 building_nw=1 clang=1 buildtype=Official OS=linux'
+export GYP_CHROMIUM_NO_ACTION=0
+export GYP_GENERATORS=ninja
+export GYP_GENERATOR_FLAGS=output_dir=out
+
+gn:
+gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="x64" symbol_level=0 is_component_build=false nwjs_sdk=false proprietary_codecs=false ffmpeg_branding="Chromium"' --root=.
+
+config node:
+python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D build_type=Release third_party/node-nw/node.gyp
+
+
+BUILD NW.JS:
+
+compile release:
+ninja -C out/nw nwjs
+
+build node:
+ninja -C out/Release node
+
+copy node:
+ninja -C out/nw copy_node
+
+dump symbols:
+ninja -C out/nw dump
+
+delete *.info files from locales
+rm out/nw/locales/*.info
+
+create packages:
+ninja -C out/nw dist
+
+
+---------------------------------------------------------------------------
+LINUX X32
+---------------------------------------------------------------------------
+
+GN GEN:
+
+export GYP_DEFINES='target_arch=ia32 building_nw=1 clang=1 buildtype=Official OS=linux'
+export GYP_CHROMIUM_NO_ACTION=0
+export GYP_GENERATORS=ninja
+export GYP_GENERATOR_FLAGS=output_dir=out
+
+gn:
+gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="x86" symbol_level=0 is_component_build=false nwjs_sdk=false proprietary_codecs=false ffmpeg_branding="Chromium"' --root=.
+
+config node:
+python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D build_type=Release third_party/node-nw/node.gyp
+
+
+BUILD NW.JS:
+
+compile release:
+ninja -C out/nw nwjs
+
+build node:
+ninja -C out/Release node
+
+copy node:
+ninja -C out/nw copy_node
+
+dump symbols:
+ninja -C out/nw dump
+
+delete *.info files from locales
+rm out/nw/locales/*.info
+
+create packages:
+ninja -C out/nw dist
+

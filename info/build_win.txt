@@ -1,0 +1,149 @@
+e:
+cd E:\nwjs
+
+set DEPOT_TOOLS_UPDATE=0
+set DEPOT_TOOLS_WIN_TOOLCHAIN=0
+
+git clone --depth 1 --no-tags -n git@github.com:SEVA77/chromium.src.git src
+
+git clone git@github.com:SEVA77/nw.js.git ./src/content/nw
+
+git clone git@github.com:SEVA77/v8.git ./src/v8
+
+git clone git@github.com:SEVA77/node.git ./src/third_party/node-nw
+
+cd src
+
+git fetch --prune --depth=1 --no-tags origin 9c94ffe8db431fbc8d0c75b1d73df8147fdb7dcf
+
+git checkout --quiet 9c94ffe8db431fbc8d0c75b1d73df8147fdb7dcf
+
+cd ..
+
+gclient config --name=src git@github.com:SEVA77/chromium.src.git
+
+```
+"custom_deps" : {
+    "src/third_party/WebKit/LayoutTests": None,
+    "src/chrome_frame/tools/test/reference_build/chrome": None,
+    "src/chrome_frame/tools/test/reference_build/chrome_win": None,
+    "src/chrome/tools/test/reference_build/chrome": None,
+    "src/chrome/tools/test/reference_build/chrome_linux": None,
+    "src/chrome/tools/test/reference_build/chrome_mac": None,
+    "src/chrome/tools/test/reference_build/chrome_win": None,
+}
+```
+
+gclient sync  --no-history --with_branch_heads --nohooks
+
+gclient runhook
+
+cd src
+
+
+APPLY PATCHES AND UTILS:
+(in git bash)
+
+./patches/ungoogled-chromium/utils/prune_binaries.py ./ patches/ungoogled-chromium/utils/pruning.list
+
+cat `cat ./patches/ungoogled-chromium_series` | patch -p1
+
+./patches/ungoogled-chromium/utils/domain_substitution.py apply -r ./patches/ungoogled-chromium/utils/domain_regex.list -f ./patches/ungoogled-chromium/utils/domain_substitution.list -c ./patches/ungoogled-chromium/domsubcache.tar.gz ./
+
+cat ./patches/*.patch | patch -p1
+
+cat ./patches/clear_locales/*.patch | patch -p1
+
+cat ./patches/cromite/*.patch | patch -p1
+
+cat ./patches/ungoogled-chromium/win/*.patch | patch -p1
+
+
+---------------------------------------------------------------------------
+WIN64:
+---------------------------------------------------------------------------
+
+GN GEN:
+
+set GYP_CHROMIUM_NO_ACTION=0
+set GYP_DEFINES=target_arch=x64 building_nw=1 icu_use_data_file_flag=1 host_arch=x64 clang=1 buildtype=Official
+set GYP_GENERATORS=ninja
+set GYP_GENERATOR_FLAGS=output_dir=outst
+set GYP_MSVS_OVERRIDE_PATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Community
+set GYP_MSVS_VERSION=2017
+
+gn:
+gn gen outst/nw ^"--args=is_debug=false is_component_ffmpeg=true target_cpu=\^"x64\^" symbol_level=0 v8_win64_unwinding_info=false use_allocator_shim=false devtools_skip_typecheck=false chrome_root_store_supported=false nwjs_sdk=false proprietary_codecs=false ffmpeg_branding=\^"Chromium\^"^" --root=.
+
+config node:
+python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D msvs_version=2019 -D icu_use_data_file_flag=1 -D build_type=Release_x64 third_party/node-nw/node.gyp
+
+
+BUILD NW.JS:
+
+compile release:
+ninja -C outst/nw nwjs
+
+build node:
+ninja -C outst/Release_x64 node
+
+copy node:
+ninja -C outst/nw copy_node
+
+dump symbols:
+ninja -C outst/nw dump
+
+delete *.info files from locales
+del .\outst\nw\locales\*.info
+
+create packages:
+ninja -C outst/nw dist
+
+
+---------------------------------------------------------------------------
+WIN32:
+---------------------------------------------------------------------------
+
+e:
+cd E:\nwjs\src
+
+set DEPOT_TOOLS_UPDATE=0
+set DEPOT_TOOLS_WIN_TOOLCHAIN=0
+
+
+GN GEN:
+
+set GYP_CHROMIUM_NO_ACTION=0
+set GYP_DEFINES=target_arch=ia32 host_arch=ia32 building_nw=1 icu_use_data_file_flag=1 clang=1 buildtype=Official
+set GYP_GENERATORS=ninja
+set GYP_GENERATOR_FLAGS=output_dir=outst
+set GYP_MSVS_OVERRIDE_PATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Community
+set GYP_MSVS_VERSION=2017
+
+gn:
+gn gen outst/nw ^"--args=is_debug=false is_component_ffmpeg=true target_cpu=\^"x86\^" v8_win64_unwinding_info=true use_allocator_shim=false use_large_pdbs=true devtools_skip_typecheck=false chrome_root_store_supported=false nwjs_sdk=false proprietary_codecs=false ffmpeg_branding=\^"Chromium\^"^" --root=.
+
+config node:
+python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D msvs_version=2019 -D icu_use_data_file_flag=1 -D build_type=Release third_party/node-nw/node.gyp
+
+
+BUILD NW.JS:
+
+compile release:
+ninja -C outst/nw nwjs
+
+build node:
+ninja -C outst/Release node
+
+copy node:
+ninja -C outst/nw copy_node
+
+dump symbols:
+ninja -C outst/nw dump
+
+delete *.info files from locales
+del .\outst\nw\locales\*.info
+
+create packages:
+ninja -C outst/nw dist
+

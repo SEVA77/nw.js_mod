@@ -1,0 +1,83 @@
+export PATH="$PATH:$HOME/depot_tools"
+mkdir -p $HOME/nwjs
+cd $HOME/nwjs
+
+git clone --depth 1 --no-tags -n git@github.com:SEVA77/chromium.src.git src
+
+cd src
+
+git fetch --prune --depth=1 --no-tags origin 9c94ffe8db431fbc8d0c75b1d73df8147fdb7dcf
+
+git checkout --quiet 9c94ffe8db431fbc8d0c75b1d73df8147fdb7dcf
+
+cd ..
+
+git clone git@github.com:SEVA77/nw.js.git ./src/content/nw
+
+git clone git@github.com:SEVA77/v8.git ./src/v8
+
+git clone git@github.com:SEVA77/node.git ./src/third_party/node-nw
+
+gclient config --name=src git@github.com:SEVA77/chromium.src.git
+
+gclient sync --no-history --with_branch_heads --nohooks
+
+cd src
+
+
+APPLY PATCHES AND UTILS:
+
+./patches/ungoogled-chromium/utils/prune_binaries.py ./ patches/ungoogled-chromium/utils/pruning.list
+
+cat `cat ./patches/ungoogled-chromium_series` | patch -p1
+
+./patches/ungoogled-chromium/utils/domain_substitution.py apply -r ./patches/ungoogled-chromium/utils/domain_regex.list -f ./patches/ungoogled-chromium/utils/domain_substitution.list -c ./patches/ungoogled-chromium/domsubcache.tar.gz ./
+
+cat ./patches/*.patch | patch -p1
+
+cat ./patches/clear_locales/*.patch | patch -p1
+
+cat ./patches/cromite/*.patch | patch -p1
+
+cat ./patches/ungoogled-chromium/macos/*.patch | patch -p1
+
+
+GN GEN:
+
+export GYP_DEFINES="target_arch=x64 building_nw=1"
+
+gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="x64" symbol_level=0 nwjs_sdk=false proprietary_codecs=false ffmpeg_branding="Chromium" enable_stripping=true enable_dsyms=true enable_precompiled_headers=false' --root=.
+
+export GYP_CHROMIUM_NO_ACTION=0
+export GYP_DEFINES="target_arch=x64 building_nw=1 clang=1 nwjs_sdk=0 disable_nacl=0 buildtype=Official"
+export GYP_GENERATORS=ninja
+export GYP_GENERATOR_FLAGS=output_dir=out
+
+python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D build_type=Release third_party/node-nw/node.gyp
+
+
+FOR ARM64 (after x64):
+
+(rm -rf ./out)
+
+cat ./patches/fix_build_for_mac_arm64.diff | patch -p1
+
+export GYP_DEFINES="target_arch=arm64 building_nw=1 clang=1 nwjs_sdk=0 disable_nacl=0 buildtype=Official"
+
+gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="arm64" symbol_level=0 nwjs_sdk=false proprietary_codecs=false ffmpeg_branding="Chromium" enable_stripping=true enable_dsyms=true enable_precompiled_headers=false' --root=.
+
+python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D build_type=Release third_party/node-nw/node.gyp
+
+
+BUILD NW.JS:
+
+ninja -C out/nw nwjs
+
+ninja -C out/Release node
+
+ninja -C out/nw copy_node
+
+ninja -C out/nw dump
+
+ninja -C out/nw dist
+
