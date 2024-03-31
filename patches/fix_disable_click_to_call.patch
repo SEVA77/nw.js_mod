@@ -31,7 +31,7 @@
        AppendQRCodeGeneratorItem(/*for_image=*/true, /*draw_icon=*/true);
  
 -#if !BUILDFLAG(IS_FUCHSIA)
-+#if (0)
++#if 0
      AppendClickToCallItem();
  #endif
  
@@ -40,7 +40,7 @@
    bool starting_separator_added = items_before_sharing > items_initial;
  
 -#if !BUILDFLAG(IS_FUCHSIA)
-+#if (0)
++#if 0
    AppendClickToCallItem();
  #endif
    AppendSharedClipboardItem();
@@ -49,7 +49,7 @@
  }
  
 -#if !BUILDFLAG(IS_FUCHSIA)
-+#if (0)
++#if 0
  void RenderViewContextMenu::AppendClickToCallItem() {
    SharingClickToCallEntryPoint entry_point;
    absl::optional<std::string> phone_number;

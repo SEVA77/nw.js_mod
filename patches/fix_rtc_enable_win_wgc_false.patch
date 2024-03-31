@@ -1,5 +1,5 @@
---- desktop_capture_device.cc_orig	2024-01-22 22:50:41.794039400 +0300
-+++ desktop_capture_device.cc	2024-02-08 07:05:17.487270500 +0300
+--- a/content/browser/media/capture/desktop_capture_device.cc
++++ b/content/browser/media/capture/desktop_capture_device.cc
 @@ -521,7 +521,7 @@
    std::unique_ptr<webrtc::DesktopCapturer> capturer;
    std::unique_ptr<media::VideoCaptureDevice> result;
