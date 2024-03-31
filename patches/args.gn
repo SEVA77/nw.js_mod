@@ -71,7 +71,9 @@ rtc_enable_external_auth = false
 rtc_libvpx_build_vp9 = false
 rtc_builtin_ssl_root_certificates = false
 tests_have_location_tags = false
+if (target_os != "win") {
 use_base_test_suite = false
+}
 use_kerberos = false
 use_mpris = false
 use_udev = false
@@ -95,7 +97,9 @@ enable_cet_shadow_stack = false
 is_cfi = false
 use_perfetto_client_library = false
 v8_builtins_profiling_log_file = ""
+if (target_os != "mac") {
 enable_dsyms = false
+}
 blink_symbol_level=0
 v8_symbol_level=0
 build_with_tflite_lib=false
@@ -121,3 +125,5 @@ safe_browsing_mode=0
 treat_warnings_as_errors=false
 use_official_google_api_keys=false
 use_unofficial_version_number=false
+
+
