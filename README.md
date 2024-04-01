@@ -16,6 +16,8 @@ In the basic version (0.64.1-mod1) only the components provided in gn flags are 
 
 ## Downloads:
 
+Non-SDK binaries only!
+
 - [Latest release](https://github.com/SEVA77/nw.js_mod/releases/latest)
 - [All Releases](https://github.com/SEVA77/nw.js_mod/releases)
 
