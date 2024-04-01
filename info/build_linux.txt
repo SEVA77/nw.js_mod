@@ -5,7 +5,7 @@ export PATH=${HOME}/.pyenv/versions/2.7.18/bin/:${HOME}/.pyenv/versions/3.10.13/
 
 cd nwjs/
 
-gclient config --name=src https://github.com/SEVA77/chromium.src.git@origin/nw70
+gclient config --name=src https://github.com/SEVA77/chromium.src.git@origin/nw64
 
 git clone https://github.com/SEVA77/nw.js.git ./src/content/nw
 
