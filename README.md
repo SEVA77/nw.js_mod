@@ -2,7 +2,7 @@
 
 > Мысли о переходе на Электрон посещали меня, но я был быстрее.
 
-Experimental and more compact modification of [NW.js](https://github.com/nwjs/nw.js) for my projects with aggressive size optimization and some features from [ungoogled chromium](https://github.com/ungoogled-software/ungoogled-chromium) and [cromite](https://github.com/uazo/cromite).
+Experimental and more compact modification of [NW.js](https://github.com/nwjs/nw.js) for my projects with aggressive size optimization and some features from [ungoogled chromium](https://github.com/ungoogled-software/ungoogled-chromium).
 
 After the unsuccessful experience of using upx, I was curious to try to reduce the size of the binary file on my own, by eliminating many browser components and configuring the compiler for size optimization. This was a good reason to dig into the Chromium source code for interest.
 
@@ -26,11 +26,10 @@ Non-SDK binaries only!
 * [Chromium project](https://www.chromium.org/Home) and developers
 * [NW.js project](https://nwjs.io/) and developers
 * [ungoogled-chromium](https://github.com/ungoogled-software/ungoogled-chromium) for some patches and utils
-* [Cromite](https://github.com/uazo/cromite) for some patches
 
 ## License
 
-NW.js_mod is published under [GNU GPL v3](./LICENSE).
+`NW.js_mod`'s code in this repo uses the MIT license, see `LICENSE` file. To redistribute the binary, see [How to package and distribute your apps](https://github.com/nwjs/nw.js/wiki/How-to-package-and-distribute-your-apps)
 
 
 

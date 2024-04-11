@@ -54,8 +54,6 @@ cat ./patches/*.patch | patch -p1
 
 cat ./patches/clear_locales/*.patch | patch -p1
 
-cat ./patches/cromite/*.patch | patch -p1
-
 cat ./patches/ungoogled-chromium/win/*.patch | patch -p1
 
 
