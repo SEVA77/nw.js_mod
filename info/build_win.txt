@@ -71,10 +71,13 @@ set GYP_MSVS_OVERRIDE_PATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/C
 set GYP_MSVS_VERSION=2017
 
 gn:
-gn gen outst/nw ^"--args=is_debug=false is_component_ffmpeg=true target_cpu=\^"x64\^" symbol_level=0 v8_win64_unwinding_info=false use_allocator_shim=false devtools_skip_typecheck=false chrome_root_store_supported=false nwjs_sdk=false proprietary_codecs=false ffmpeg_branding=\^"Chromium\^"^" --root=.
+gn gen outst/nw ^"--args=is_debug=false is_component_ffmpeg=true target_cpu=\^"x64\^" symbol_level=0 v8_win64_unwinding_info=false use_allocator_shim=false devtools_skip_typecheck=false chrome_root_store_supported=false rtc_enable_win_wgc=false use_zucchini=false nwjs_sdk=false proprietary_codecs=false enable_dsyms=false ffmpeg_branding=\^"Chromium\^"^" --root=.
 
 config node:
 python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D msvs_version=2019 -D icu_use_data_file_flag=1 -D build_type=Release_x64 third_party/node-nw/node.gyp
+
+add additional args (in git bash):
+cat ./patches/args.gn >> ./outst/nw/args.gn
 
 
 BUILD NW.JS:
@@ -119,10 +122,13 @@ set GYP_MSVS_OVERRIDE_PATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/C
 set GYP_MSVS_VERSION=2017
 
 gn:
-gn gen outst/nw ^"--args=is_debug=false is_component_ffmpeg=true target_cpu=\^"x86\^" v8_win64_unwinding_info=true use_allocator_shim=false use_large_pdbs=true devtools_skip_typecheck=false chrome_root_store_supported=false nwjs_sdk=false proprietary_codecs=false ffmpeg_branding=\^"Chromium\^"^" --root=.
+gn gen outst/nw ^"--args=is_debug=false is_component_ffmpeg=true target_cpu=\^"x86\^" v8_win64_unwinding_info=true use_allocator_shim=false use_large_pdbs=true devtools_skip_typecheck=false chrome_root_store_supported=false rtc_enable_win_wgc=false use_zucchini=false nwjs_sdk=false proprietary_codecs=false enable_dsyms=false ffmpeg_branding=\^"Chromium\^"^" --root=.
 
 config node:
 python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D msvs_version=2019 -D icu_use_data_file_flag=1 -D build_type=Release third_party/node-nw/node.gyp
+
+add additional args (in git bash):
+cat ./patches/args.gn >> ./outst/nw/args.gn
 
 
 BUILD NW.JS:

@@ -53,6 +53,8 @@ export GYP_GENERATOR_FLAGS=output_dir=out
 
 python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D build_type=Release third_party/node-nw/node.gyp
 
+cat ./patches/args.gn >> ./out/nw/args.gn
+
 
 FOR ARM64 (after x64):
 
@@ -65,6 +67,8 @@ export GYP_DEFINES="target_arch=arm64 building_nw=1 clang=1 nwjs_sdk=0 disable_n
 gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="arm64" symbol_level=0 nwjs_sdk=false proprietary_codecs=false ffmpeg_branding="Chromium" enable_stripping=true enable_dsyms=true enable_precompiled_headers=false' --root=.
 
 python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D build_type=Release third_party/node-nw/node.gyp
+
+cat ./patches/args.gn >> ./out/nw/args.gn
 
 
 BUILD NW.JS:

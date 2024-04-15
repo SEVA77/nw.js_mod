@@ -19,7 +19,7 @@ gclient runhooks
 
 cd src/
 
-##python build/linux/sysroot_scripts/install-sysroot.py --all
+# python build/linux/sysroot_scripts/install-sysroot.py --all
 
 
 APPLY PATCHES AND UTILS:
@@ -47,10 +47,13 @@ export GYP_GENERATORS=ninja
 export GYP_GENERATOR_FLAGS=output_dir=out
 
 gn:
-gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="x64" symbol_level=0 is_component_build=false nwjs_sdk=false proprietary_codecs=false ffmpeg_branding="Chromium"' --root=.
+gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="x64" symbol_level=0 is_component_build=false nwjs_sdk=false proprietary_codecs=false enable_dsyms=false ffmpeg_branding="Chromium"' --root=.
 
 config node:
 python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D build_type=Release third_party/node-nw/node.gyp
+
+add additional args:
+cat ./patches/args.gn >> ./out/nw/args.gn
 
 
 BUILD NW.JS:
@@ -86,10 +89,13 @@ export GYP_GENERATORS=ninja
 export GYP_GENERATOR_FLAGS=output_dir=out
 
 gn:
-gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="x86" symbol_level=0 is_component_build=false nwjs_sdk=false proprietary_codecs=false ffmpeg_branding="Chromium"' --root=.
+gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="x86" symbol_level=0 is_component_build=false nwjs_sdk=false proprietary_codecs=false enable_dsyms=false ffmpeg_branding="Chromium"' --root=.
 
 config node:
 python3 third_party/node-nw/tools/gyp/gyp_main.py -I third_party/node-nw/common.gypi -D build_type=Release third_party/node-nw/node.gyp
+
+add additional args:
+cat ./patches/args.gn >> ./out/nw/args.gn
 
 
 BUILD NW.JS:
