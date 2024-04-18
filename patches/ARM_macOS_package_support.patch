@@ -1,0 +1,25 @@
+From b2b616e46bdef372e89e0f99bf090269c791d1b6 Mon Sep 17 00:00:00 2001
+From: Roger Wang <roger@nwjs.io>
+Date: Mon, 15 May 2023 16:10:22 -0600
+Subject: [PATCH] [tools] ARM macOS package support
+
+---
+ tools/package_binaries.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/content/nw/tools/package_binaries.py b/content/nw/tools/package_binaries.py
+index f9c8884e39..765e568543 100755
+--- a/content/nw/tools/package_binaries.py
++++ b/content/nw/tools/package_binaries.py
+@@ -215,7 +215,10 @@ def generate_target_nw(platform_name, arch, version):
+             target['input'].append('chromedriver')
+             target['input'].append('libffmpeg.dylib')
+             target['input'].append('minidump_stackwalk')
+-            target['input'].append('v8_context_snapshot.x86_64.bin')
++            if arch == 'arm64':
++                target['input'].append('v8_context_snapshot.arm64.bin')
++            else:
++                target['input'].append('v8_context_snapshot.x86_64.bin')
+     else:
+         print ('Unsupported platform: ' + platform_name)
+         exit(-1)

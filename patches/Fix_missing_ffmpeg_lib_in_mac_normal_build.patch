@@ -1,0 +1,22 @@
+From 9055144554ed08c878d8a09b604a48c50f42228f Mon Sep 17 00:00:00 2001
+From: Roger Wang <roger@nwjs.io>
+Date: Thu, 19 Oct 2023 12:36:26 -0600
+Subject: [PATCH] Fix missing ffmpeg lib in mac normal build
+
+---
+ BUILD.gn | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/content/nw/BUILD.gn b/content/nw/BUILD.gn
+index d228cd731e..2cd7e8e380 100644
+--- a/content/nw/BUILD.gn
++++ b/content/nw/BUILD.gn
+@@ -345,7 +345,7 @@ if (is_mac && !is_component_build) {
+   group("dump") {
+     testonly = true
+     deps = [ "//third_party/breakpad:dump_syms",
+-             "//chrome",
++             ":copy_ffmpeg",
+              ":copy_node",
+              "//v8:nwjc",
+              "//chrome/test/chromedriver:chromedriver_server",

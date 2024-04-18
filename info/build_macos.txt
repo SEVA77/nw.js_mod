@@ -60,8 +60,6 @@ FOR ARM64 (after x64):
 
 (rm -rf ./out)
 
-cat ./patches/fix_build_for_mac_arm64.diff | patch -p1
-
 export GYP_DEFINES="target_arch=arm64 building_nw=1 clang=1 nwjs_sdk=0 disable_nacl=0 buildtype=Official"
 
 gn gen out/nw '--args=is_debug=false is_component_ffmpeg=true target_cpu="arm64" symbol_level=0 nwjs_sdk=false proprietary_codecs=false ffmpeg_branding="Chromium" enable_stripping=true enable_dsyms=true enable_precompiled_headers=false' --root=.
@@ -77,9 +75,14 @@ ninja -C out/nw nwjs
 
 ninja -C out/Release node
 
+ninja -C out/nw copy_ffmpeg
+
 ninja -C out/nw copy_node
 
 ninja -C out/nw dump
+
+(for arm64 for test:)
+codesign --force --deep -s - ./out/nw/nwjs.app
 
 ninja -C out/nw dist
 
